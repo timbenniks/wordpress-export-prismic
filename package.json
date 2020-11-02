@@ -1,0 +1,19 @@
+{
+  "name": "wordpress-export",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Tim Benniks",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "cheerio": "^1.0.0-rc.3",
+    "node-fetch": "^2.6.1",
+    "phpunserialize": "^1.0.1",
+    "uuid": "^8.3.1"
+  }
+}

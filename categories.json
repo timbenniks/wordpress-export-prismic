@@ -1,0 +1,87 @@
+[
+  {
+    "id": 858,
+    "name": "Aziatisch",
+    "slug": "aziatisch"
+  },
+  {
+    "id": 1085,
+    "name": "Duits",
+    "slug": "duits"
+  },
+  {
+    "id": 889,
+    "name": "Engels",
+    "slug": "engels"
+  },
+  {
+    "id": 843,
+    "name": "Frans",
+    "slug": "frans"
+  },
+  {
+    "id": 1402,
+    "name": "fusion",
+    "slug": "fusion"
+  },
+  {
+    "id": 1,
+    "name": "Geen categorie",
+    "slug": "geen-categorie"
+  },
+  {
+    "id": 842,
+    "name": "Italiaans",
+    "slug": "italiaans"
+  },
+  {
+    "id": 960,
+    "name": "Mexicaans",
+    "slug": "mexicaans"
+  },
+  {
+    "id": 864,
+    "name": "Midden Oosten",
+    "slug": "midden-oosten"
+  },
+  {
+    "id": 963,
+    "name": "Nederlands",
+    "slug": "nederlands"
+  },
+  {
+    "id": 962,
+    "name": "Nederlansa",
+    "slug": "nederlansa"
+  },
+  {
+    "id": 36,
+    "name": "persoonlijk",
+    "slug": "persoonlijk"
+  },
+  {
+    "id": 17,
+    "name": "recensies",
+    "slug": "recensies"
+  },
+  {
+    "id": 16,
+    "name": "Recepten",
+    "slug": "recepten"
+  },
+  {
+    "id": 1254,
+    "name": "Spaans",
+    "slug": "spaans"
+  },
+  {
+    "id": 892,
+    "name": "Taarten",
+    "slug": "taarten"
+  },
+  {
+    "id": 913,
+    "name": "Verenigde Staten",
+    "slug": "verenigde-staten"
+  }
+]
