@@ -55,12 +55,14 @@ async function getCommentsForPost(id) {
 async function getPosts() {
   const posts = await getAllWp('posts')
   return Promise.all(posts.map(async post => {
+    console.log(chalk.green(`Fetching ${post.slug}`))
+
     return {
       id: post.id,
       date: post.date,
       slug: post.slug,
       title: post.title.rendered,
-      content: await cleanupContent(post.content.rendered),
+      content: await cleanupContent(post.content.rendered, post.slug, post.id),
       excerpt: post.excerpt.rendered,
       categories: post.categories,
       tags: post.tags,
@@ -74,26 +76,37 @@ async function getPosts() {
   }))
 }
 
-async function cleanupContent(html) {
+async function cleanupContent(html, slug, id) {
+  console.log(chalk.grey(`Starting cleanup: ${id} [${slug}]`))
+
   const $ = cheerio.load(html, { decodeEntities: true })
   if($('.wprm-recipe-container')){
     $('.wprm-recipe-container').remove()
   }
+  
   $('img').remove()
 
   $('strong').each((i, el) => {
     return $(el).replaceWith($(el).text());
   });
 
-  const res = $.html('body').replace(/<body>|<\/body>/g, '').replace(/\r?\n|\r/g, '').replace(/<p><\/p>/g, '')
+  const res = $.html('body')
+                .replace(/<body>|<\/body>/g, '')
+                .replace(/\r?\n|\r/g, '')
+                .replace(/<p><\/p>/g, '')
+                .replace(/<!--more-->/g, '')
+  
+  console.log(chalk.grey(`Cleaned up: ${id} [${slug}]`))
 
   return await new Promise((resolve, reject) => {
+    console.log(res)
     exec(
-      `ruby ${HTML_PARSER} ${res}`, (err, stdout) => {
+      `ruby ${HTML_PARSER} "${res}"`, (err, stdout) => {
         if(err) {
           reject(err)
         }
 
+        console.log(chalk.grey(`Created prismic HTML for: ${id} [${slug}]`))
         resolve(JSON.parse(stdout))
       }
     );
@@ -167,12 +180,38 @@ function writePost(post) {
   });
 }
 
-(async () => {
-  const posts = enrichPostsWithMetadata({
-    posts: await getPosts(),
-    tags: await getMetadata('tags'),
-    categories: await getMetadata('categories')
+function getPostForId(id) {
+  return fetch(`${WP_API}/posts/${id}`).then(response => {
+    if (!response.ok) {
+      throw new Error(`Fetching posts failed with code ${response.status}`)
+    }
+    return response.json()
   })
+}
 
-  return Promise.all(posts.map(writePost));
+async function getPostForId(id) {
+  return await fetch(`${WP_API}/posts/${id}`).then(response => {
+    if (response.ok) {
+      return response.json()
+    }
+    else {
+      throw new Error(`Fetching post ${id} failed with code ${response.status}`)
+    }
+  })
+}
+
+(async () => {
+  // const posts = enrichPostsWithMetadata({
+  //   posts: await getPosts(),
+  //   tags: await getMetadata('tags'),
+  //   categories: await getMetadata('categories')
+  // })
+
+  // return Promise.all(posts.map(writePost));
+
+  const post = await getPostForId(466);
+  const content = await cleanupContent(post.content.rendered, post.slug, post.id)
+
+  console.log(content)
+
 })()
