@@ -1,18 +1,18 @@
+const fs = require('fs')
+const path = require('path')
+
 const fetch = require('node-fetch')
 const chalk = require('chalk')
 const cheerio = require('cheerio')
 const phpunserialize = require('phpunserialize')
-const WP_API = `https://domainemalpaskookt.com/wp-json/wp/v2`
-const recipeData = require('./recipes.json')
 const { v4: uuidv4 } = require('uuid');
 const { exec } = require('child_process');
 const srcset = require('srcset');
 
-const fs = require('fs')
-const path = require('path')
-
+const WP_API = `https://domainemalpaskookt.com/wp-json/wp/v2`
+const recipeData = require('./recipes.json')
 const OUTPUT_PATH = path.join(process.cwd(), `./import`)
-const HTML_PARSER = `./htmlParser.rb`;
+const HTML_PARSER = `./htmlParser.rb`
 
 async function getAllWp(resource, queryParams) {
   let page = 1
@@ -47,15 +47,17 @@ async function getCommentsForPost(id) {
     if (response.ok) {
       return response.json()
     }
-    else {
+    
       return false
-    }
+    
   })  
 }
 
 async function getPosts() {
   const posts = await getAllWp('posts')
-  return Promise.all(posts.map(async post => {
+  const onlyRecipes = posts.filter(post => !post.categories.includes(36))
+
+  return Promise.all(onlyRecipes.map(async post => {
     console.log(chalk.green(`Fetching ${post.slug}`))
 
     return {
@@ -64,7 +66,7 @@ async function getPosts() {
       slug: post.slug,
       title: post.title.rendered,
       content: await cleanupContent(post.content.rendered, post.slug, post.id),
-      excerpt: post.excerpt.rendered,
+      excerpt: await prismicify(post.excerpt.rendered, post.slug, post.id),
       categories: post.categories,
       tags: post.tags,
       image: post.jetpack_featured_media_url || findImageInContent(post.content.rendered, post.slug, post.id),
@@ -108,9 +110,7 @@ async function cleanupContent(html, slug, id) {
   $('img').remove()
   $('figure').remove()
 
-  $('strong').each((i, el) => {
-    return $(el).replaceWith($(el).text());
-  });
+  $('strong').each((i, el) => $(el).replaceWith($(el).text()));
 
   const res = $.html('body')
                 .replace(/<body>|<\/body>/g, '')
@@ -127,15 +127,18 @@ async function cleanupContent(html, slug, id) {
                 .replace(/rel="noopener noreferrer"/g, 'rel="noopener"')
   
   console.log(chalk.grey(`Cleaned up: ${id} [${slug}]`))
+  return await prismicify(res, slug, id);
+}
 
+async function prismicify(html, slug, id) {
   return await new Promise((resolve, reject) => {
     exec(
-      `ruby ${HTML_PARSER} '${res}'`, (err, stdout) => {
+      `ruby ${HTML_PARSER} '${html}'`, (err, stdout) => {
         if(err) {
           reject(err)
         }
 
-        console.log(chalk.grey(`Created prismic HTML for: ${id} [${slug}]`))
+        console.log(chalk.grey(`Converted to Prismic HTML for: ${id} [${slug}]`))
         resolve(JSON.parse(stdout))
       }
     );
@@ -145,13 +148,11 @@ async function cleanupContent(html, slug, id) {
 async function getMetadata(which) {
   const meta = await getAllWp(which)
   
-  return meta.map(m => {
-    return {
+  return meta.map(m => ({
       id: m.id,
       name: m.name,
       slug: m.slug
-    }
-  })
+    }))
 }
 
 function mapMetadata(ids, items) {
@@ -173,12 +174,10 @@ function mapRecipeData(post) {
   }
 
   console.log(chalk.blue(`Mapping receipe data for: ${post.id} [${post.slug}]`))
-  const instructions = getMetaDatafromRecipe(recipeExportData.postmeta, 'wprm_instructions');
-  const ingredients = getMetaDatafromRecipe(recipeExportData.postmeta, 'wprm_ingredients');
-
+  
   return {
-    instructions: (instructions && instructions.length > 0) ? instructions[0].instructions : false,
-    ingredients: (ingredients && ingredients.length > 0) ? ingredients[0].ingredients : false,
+    instructions: getMetaDatafromRecipe(recipeExportData.postmeta, 'wprm_instructions'),
+    ingredients: getMetaDatafromRecipe(recipeExportData.postmeta, 'wprm_ingredients'),
     servings: getMetaDatafromRecipe(recipeExportData.postmeta, 'wprm_servings'),
     servingsUnit: getMetaDatafromRecipe(recipeExportData.postmeta, 'wprm_servings_unit'),
     prepTime: getMetaDatafromRecipe(recipeExportData.postmeta, 'wprm_prep_time'),
@@ -187,14 +186,12 @@ function mapRecipeData(post) {
 }
 
 function enrichPostsWithMetadata(options) {
-  return options.posts.map(post => {
-    return {
+  return options.posts.map(post => ({
       ...post,
       tags: mapMetadata(post.tags, options.tags),
       categories: mapMetadata(post.categories, options.categories),
       recipe: mapRecipeData(post)
-    }
-  })
+    }))
 }
 
 function getMetaDatafromRecipe(data, which) {
@@ -202,21 +199,30 @@ function getMetaDatafromRecipe(data, which) {
   let result = item.meta_value
 
   if(which === 'wprm_instructions') {
-    result = phpunserialize(item.meta_value)[0].instructions.map(instruction => {
-      return {
-        text: instruction.text
-      }
-    })
+    const instructions = phpunserialize(item.meta_value);
+    if(instructions && instructions.length > 0) {
+      result = phpunserialize(item.meta_value)[0].instructions.map(instruction => ({
+          text: instruction.text
+        }))
+    }
+    else {
+      result = false
+    }
   }
   
   if(which === 'wprm_ingredients') {
-    result = phpunserialize(item.meta_value)[0].ingredients.map(ingredient => {
-      return {
-        amount: ingredient.amount,
-        unit: ingredient.unit,
-        name: ingredient.name,
-      }
-    })
+    const ingredients = phpunserialize(item.meta_value);
+
+    if(ingredients && ingredients.length > 0) {
+      result = phpunserialize(item.meta_value)[0].ingredients.map(ingredient => ({
+          amount: ingredient.amount,
+          unit: ingredient.unit,
+          name: ingredient.name,
+        }))
+    }
+    else {
+      result = false
+    }
   }
 
    return result
@@ -238,9 +244,8 @@ async function getPostForId(id) {
     if (response.ok) {
       return response.json()
     }
-    else {
-      throw new Error(`Fetching post ${id} failed with code ${response.status}`)
-    }
+    
+    throw new Error(`Fetching post ${id} failed with code ${response.status}`)
   })
 }
 
@@ -251,16 +256,5 @@ async function getPostForId(id) {
     categories: await getMetadata('categories')
   })
 
-  return Promise.all(posts.map(writePost));
+  Promise.all(posts.map(writePost))
 })()
-
-// const allInstructions = recipeData.channel.item.map(recipe => {
-//   console.log(`parsing ${recipe.title}`)
-//   return {
-//     title: recipe.title,
-//     instructionsRaw: recipe.postmeta.find(d => d.meta_key === 'wprm_instructions').meta_value,
-//     instructionsParsed: phpunserialize(recipe.postmeta.find(d => d.meta_key === 'wprm_instructions').meta_value)
-//   }
-// })
-
-// console.log(allInstructions)

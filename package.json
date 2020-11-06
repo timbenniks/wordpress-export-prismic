@@ -12,9 +12,13 @@
   "dependencies": {
     "chalk": "^4.1.0",
     "cheerio": "^1.0.0-rc.3",
+    "images-downloader": "^1.0.3",
     "node-fetch": "^2.6.1",
     "phpunserialize": "^1.0.1",
     "srcset": "^3.0.0",
     "uuid": "^8.3.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.12.1"
   }
 }
