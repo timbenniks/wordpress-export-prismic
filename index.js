@@ -10,8 +10,8 @@ const { exec } = require('child_process');
 const srcset = require('srcset');
 
 const WP_API = `https://domainemalpaskookt.com/wp-json/wp/v2`
-const recipeData = require('./recipes.json')
-const categories = require('./categories.json')
+const RECIPE_DATA = require('./recipes.json')
+const CATEGORIES = require('./categories.json')
 const OUTPUT_PATH = path.join(process.cwd(), `./import`)
 const HTML_PARSER = `./htmlParser.rb`
 
@@ -43,17 +43,6 @@ async function getAllWp(resource, queryParams) {
   return resources
 }
 
-async function getCommentsForPost(id) {
-  return await fetch(`${WP_API}/comments?post=${id}`).then(response => {
-    if (response.ok) {
-      return response.json()
-    }
-    
-      return false
-    
-  })  
-}
-
 async function getPosts() {
   const posts = await getAllWp('posts')
   //const posts = [await getPostForId(3050)]
@@ -63,7 +52,6 @@ async function getPosts() {
     console.log(chalk.green(`Fetching ${post.slug}`))
 
     return {
-      //id: post.id,
       uid: post.slug,
       type: "recipe",
       publication_date: post.date,
@@ -74,6 +62,7 @@ async function getPosts() {
       additional_content: await cleanupContent(post.content.rendered, post.slug),
       categories: post.categories,
       tags: post.tags,
+      // comments come later...
       // comments: await getCommentsForPost(post.id),
       meta_title: post._yoast_wpseo_title || post.title.rendered,
       meta_description: post._yoast_wpseo_metadesc,
@@ -129,6 +118,7 @@ async function cleanupContent(html, slug) {
   $('figure').remove()
   $('strong').each((i, el) => $(el).replaceWith($(el).text()));
 
+  // Yikes...
   const res = $.html('body')
     .replace(/<body>|<\/body>/g, '')
     .replace(/\r?\n|\r/g, '')
@@ -166,10 +156,10 @@ async function getMetadata(which) {
   const meta = await getAllWp(which)
   
   return meta.map(m => ({
-      id: m.id,
-      name: m.name,
-      slug: m.slug
-    }))
+    id: m.id,
+    name: m.name,
+    slug: m.slug
+  }))
 }
 
 function mapTags(ids, tags) {
@@ -184,7 +174,7 @@ function mapCategories(ids, items) {
   })
 
   return cats.map(cat => {
-    const category = categories.find(category => category.label.toLowerCase() === cat.toLowerCase());
+    const category = CATEGORIES.find(category => category.label.toLowerCase() === cat.toLowerCase());
     if(category) {
       return {
         category: {
@@ -196,8 +186,8 @@ function mapCategories(ids, items) {
   })
 }
 
-function mapRecipeData(post) {
-  const recipeExportData = recipeData.channel.item.find(item => item.title === post.title[0].content.text)
+function mapRecipedata(post) {
+  const recipeExportData = RECIPE_DATA.channel.item.find(item => item.title === post.title[0].content.text)
   
   if(!recipeExportData) {
     return false
@@ -217,11 +207,11 @@ function mapRecipeData(post) {
 
 function enrichPostsWithMetadata(options) {
   return options.posts.map(post => ({
-      ...post,
-      tags: mapTags(post.tags, options.tags),
-      categories: mapCategories(post.categories, options.categories),
-      ...mapRecipeData(post)
-    }))
+    ...post,
+    tags: mapTags(post.tags, options.tags),
+    categories: mapCategories(post.categories, options.categories),
+    ...mapRecipedata(post)
+  }))
 }
 
 function getMetaDatafromRecipe(data, which) {
@@ -258,13 +248,7 @@ function mapInsructions(instructionsGroups) {
   instructionsGroups.forEach(group => {
     if(group.name) {
       result.push({
-        instructions_group_title: [{
-          type: "heading6",
-          content: {
-            text: group.name,
-            spans: []
-          }
-        }]
+        instructions_group_title: group.name
       })
     }
   
@@ -284,13 +268,7 @@ function mapIngredients(ingredientsGroups) {
   ingredientsGroups.forEach(group => {
     if(group.name) {
       result.push({
-        ingredient_group_title: [{
-          type: "heading6",
-          content: {
-            text: group.name,
-            spans: []
-          }
-        }]
+        ingredient_group_title: group.name
       })
     }
   
@@ -317,15 +295,25 @@ function writePost(post) {
   });
 }
 
-async function getPostForId(id) {
-  return await fetch(`${WP_API}/posts/${id}`).then(response => {
-    if (response.ok) {
-      return response.json()
-    }
-    
-    throw new Error(`Fetching post ${id} failed with code ${response.status}`)
-  })
-}
+// currently unused
+// async function getPostForId(id) {
+//   return await fetch(`${WP_API}/posts/${id}`).then(response => {
+//     if (response.ok) {
+//       return response.json()
+//     }
+//     throw new Error(`Fetching post ${id} failed with code ${response.status}`)
+//   })
+// }
+
+// Currently unused.
+// async function getCommentsForPost(id) {
+//   return await fetch(`${WP_API}/comments?post=${id}`).then(response => {
+//     if (response.ok) {
+//       return response.json()
+//     }
+//     return false
+//   })  
+// }
 
 (async () => {
   const posts = enrichPostsWithMetadata({
