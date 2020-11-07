@@ -54,8 +54,8 @@ async function getCommentsForPost(id) {
 }
 
 async function getPosts() {
-  //const posts = await getAllWp('posts')
-  const posts = [await getPostForId(1846)]
+  const posts = await getAllWp('posts')
+  //const posts = [await getPostForId(1846)]
   const onlyRecipes = posts.filter(post => !post.categories.includes(36))
 
   return Promise.all(onlyRecipes.map(async post => {
@@ -181,7 +181,7 @@ function mapRecipeData(post) {
   console.log(chalk.blue(`Mapping receipe data for: [${post.uid}]`))
   
   return {
-    //recipe_instructions: getMetaDatafromRecipe(recipeExportData.postmeta, 'wprm_instructions'),
+    recipe_instructions: getMetaDatafromRecipe(recipeExportData.postmeta, 'wprm_instructions'),
     recipe_ingredients: getMetaDatafromRecipe(recipeExportData.postmeta, 'wprm_ingredients'),
     recipe_servings_amount: getMetaDatafromRecipe(recipeExportData.postmeta, 'wprm_servings'),
     recipe_servings_type: getMetaDatafromRecipe(recipeExportData.postmeta, 'wprm_servings_unit'),

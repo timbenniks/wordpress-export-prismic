@@ -1,12 +1,19 @@
 [
-  { "id": "", "label": "Aziatisch" },
-  { "id": "", "label": "Duits" },
-  { "id": "", "label": "Engels" },
-  { "id": "", "label": "Frans" },
-  { "id": "", "label": "Fusion" },
-  { "id": "", "label": "Geen categorie" },
-  { "id": "", "label": "Italiaans" },
-  { "id": "", "label": "Mexicaans" },
-  { "id": "", "label": "Midden Oosten" },
-  { "id": "", "label": "Nederlands" }
+  { "id": "", "label": "aziatisch" },
+  { "id": "", "label": "duits" },
+  { "id": "", "label": "engels" },
+  { "id": "", "label": "frans" },
+  { "id": "", "label": "fusion" },
+  { "id": "", "label": "geen categorie" },
+  { "id": "", "label": "italiaans" },
+  { "id": "", "label": "mexicaans" },
+  { "id": "", "label": "midden oosten" },
+  { "id": "", "label": "nederlands" },
+  { "id": "", "label": "persoonlijk" },
+  { "id": "", "label": "recensies" },
+  { "id": "", "label": "recepten" },
+  { "id": "", "label": "spaans" },
+  { "id": "", "label": "taarten" },
+  { "id": "", "label": "verenigde staten" }
+
 ]
