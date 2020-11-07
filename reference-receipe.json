@@ -1,0 +1,221 @@
+{
+	"uid": "rendang-uit-de-bijbel-van-de-indonesische-keuken-van",
+	"publication_date": "2020-11-17",
+	"categories": [{
+		"category": {
+			"id": "X6KTlBEAACQARsXY",
+			"wioUrl": "wio://documents/X6KTlBEAACQARsXY"
+		}
+	}, {
+		"category": {
+			"id": "X6LhahEAACEASAht",
+			"wioUrl": "wio://documents/X6LhahEAACEASAht"
+		}
+	}],
+	"title": [{
+		"type": "heading1",
+		"content": {
+			"text": "Rendang uit de bijbel van de Indonesische keuken",
+			"spans": []
+		}
+	}],
+	"intro": [{
+		"type": "paragraph",
+		"content": {
+			"text": "Rendang uit de bijbel van de Indonesische keuken van Maureen Tan, of eigenlijk dus rendang naar\nrecept van Maureen Tan. En ik kan je vertellen dit is de allerlekkerste rendang die je ooit\nhebt geproefd. Door zelf de boemboe te maken krijg je de echte authentieke smaak die je moet hebben\nvoor een goede rendang. Nu speel ik een beetje vals, want Maureen Tan mag ik een vriendin noemen,\ndus ik ben een beetje bevooroordeeld, al is dat niet helemaal waar, mijn familie heeft altijd een hoop\nIndische vrienden om zich heen gehad en ik heb dus menig goede rendang mogen proeven.\nMaureen geeft trouwens ook geweldige kookworkshops, kijk maar eens hier, die wil ik graag gaan volgen,\nzo gauw ik weer in Nederland ben. En haar geweldige boek de bijbel van de Indonesische keuken kan iedereen kopen, serieus wat een parel: werkelijk alle gerechten die je kan bedenken staan erin, heel duidelijk geschreven waardoor je er makkelijk mee aan de slag gaat.\nInmiddels is er trouwens al een 6de druk, dus niet alleen ik vind dit een geweldig kookboek",
+			"spans": [{
+				"start": 0,
+				"end": 311,
+				"type": "strong"
+			}, {
+				"start": 642,
+				"end": 646,
+				"type": "hyperlink",
+				"data": {
+					"url": "https://www.facebook.com/anakbungsuamsterdam",
+					"target": "_blank"
+				}
+			}, {
+				"start": 735,
+				"end": 771,
+				"type": "hyperlink",
+				"data": {
+					"url": "https://www.scheltema.nl/zoek/?a=Canan%20Tan",
+					"target": "_blank"
+				}
+			}]
+		}
+	}],
+	"additional_content": [{
+		"type": "heading3",
+		"content": {
+			"text": "Rendang Indonesisch stoofvlees",
+			"spans": []
+		}
+	}, {
+		"type": "paragraph",
+		"content": {
+			"text": "Stoofvlees staat voor mij gelijk aan comfort food, eten wat je gelukkig maakt en dat is soms heel fijn.\nVeel Indonesische eten heeft dat: de zoete en vaak pittige smaken gecombineerd is zo lekker.\nEn elk eiland heeft zijn eigen typische smaken, zo is het boek dan ook ingedeeld, dat maakt het\ngoed overzichtelijk. Je hebt trouwens ook een goede index achterin waar je op ingrediënt of eiland kunt zoeken.\nDoe jezelf een lol trouwens en ga met de ingrediënten lijst naar de toko! Haal daar alle producten vers: heel\nveel kun je namelijk goed invriezen. En daar ga je heel veel lol van hebben als je uit dit fantastische boek\ngaat koken. Die lieve Maureen had trouwens voor mij een grote doos van de toko samengesteld die ze aan mijn\nmoeder heeft gebracht en die lieve Mamma dan weer mee naar mij in Zuid Frankrijk mee heeft genomen.\nWaardoor ik dus nu bijna het hele kookboek kan koken!",
+			"spans": []
+		}
+	}, {
+		"type": "paragraph",
+		"content": {
+			"text": "Serveer de rendang met rijst en een lekkere groente uit het boek of wat dacht je van de miso worteltjes.",
+			"spans": [{
+				"start": 88,
+				"end": 103,
+				"type": "hyperlink",
+				"data": {
+					"url": "https://domainemalpaskookt.com/geroosterde-worteltjes-met-misosaus/",
+					"target": "_blank"
+				}
+			}]
+		}
+	}, {
+		"type": "paragraph",
+		"content": {
+			"text": "Eet lekker: en vraag dat boek voor Sint of Kerst of je verjaardag ;)",
+			"spans": []
+		}
+	}, {
+		"type": "paragraph",
+		"content": {
+			"text": "Zin gekregen in een ander lekker Aziatisch recept: wat dacht je van deze miso kip met kool of deze kip in panko met 5 spices?",
+			"spans": [{
+				"start": 72,
+				"end": 90,
+				"type": "hyperlink",
+				"data": {
+					"url": "https://domainemalpaskookt.com/miso-kip-met-chinese-kool/",
+					"target": "_blank"
+				}
+			}, {
+				"start": 99,
+				"end": 124,
+				"type": "hyperlink",
+				"data": {
+					"url": "https://domainemalpaskookt.com/crunchy-kip-in-panko-en-5-spices/",
+					"target": "_blank"
+				}
+			}]
+		}
+	}],
+	"recipe_image": {
+		"origin": {
+			"id": "X6KO4BEAACQARrEB",
+			"url": "https://prismic-io.s3.amazonaws.com/domainemalpaskookt/fc631542-1c7e-4c4b-93e8-5892fcd770fb_Maureen-haar-rendang--scaled.jpg",
+			"width": 1920,
+			"height": 2560
+		},
+		"width": 1920,
+		"height": 2560,
+		"url": "https://images.prismic.io/domainemalpaskookt/fc631542-1c7e-4c4b-93e8-5892fcd770fb_Maureen-haar-rendang--scaled.jpg?auto=compress,format",
+		"edit": {
+			"background": "#fff",
+			"zoom": 1.0,
+			"crop": {
+				"x": 0,
+				"y": 0
+			}
+		},
+		"credits": null,
+		"alt": "Rendang uit de bijbel van de Indonesische keuken",
+		"provider": "imgix",
+		"thumbnails": {}
+	},
+	"recipe_name": "Rendang uit de bijbel van de Indonesische keuken",
+	"recipe_summary": [{
+		"type": "paragraph",
+		"content": {
+			"text": "Rendang uit de bijbel van de Indonesische keuken van Maureen Tan, het allerfijnste recept om thuis de allerlekkerste rendang te maken: Indonesisch stoofvlees",
+			"spans": []
+		}
+	}],
+	"recipe_servings_amount": "4",
+	"recipe_servings_type": "Personen",
+	"recipe_prep_time": "40",
+	"recipe_cook_time": "180",
+	"recipe_ingredients": [{
+		"ingredient_group_title": [{
+			"type": "heading6",
+			"content": {
+				"text": "De boemboe",
+				"spans": []
+			}
+		}]
+	}, {
+		"ingredient_amount": "5",
+		"ingredient_unit": "middelgrote",
+		"ingredient_name": "sjalotjes in dunne plakjes"
+	}, {
+		"ingredient_amount": "7",
+		"ingredient_unit": "teentjes",
+		"ingredient_name": "knoflook in dunne plakjes"
+	}, {
+		"ingredient_amount": "8",
+		"ingredient_unit": "normale",
+		"ingredient_name": "lomboks in fijne ringetjes"
+	}, {
+		"ingredient_amount": "5",
+		"ingredient_unit": "cm",
+		"ingredient_name": "gember in dunne plakjes"
+	}, {
+		"ingredient_group_title": [{
+			"type": "heading6",
+			"content": {
+				"text": "De saus en het vlees",
+				"spans": []
+			}
+		}]
+	}, {
+		"ingredient_amount": "1",
+		"ingredient_unit": "kilo",
+		"ingredient_name": "runderstoofvlees in vierkante blokjes van een cm of 3,5"
+	}, {
+		"ingredient_amount": "2",
+		"ingredient_name": "kurkuma blaadjes"
+	}],
+	"recipe_instructions": [{
+		"instruction": "Maal en stamp met een vijzel alle boemboe ingredieenten tot een fijne boemboe. Verhit nu een beetje olie in een wok op middelhoog vuur en fruit vervolgens de boemboe een minuut of 10"
+	}, {
+		"instruction": "Vervolgens voeg je de 5 kaffirlimoenblaadjes, de asem kandis of de tamarinde pulp en het weekwater toe samen met de kokosmelk. Breng nu de saus aan bijna aan de kook, tot het punt dat de olie zich begint te scheiden van de boemboe"
+	}, {
+		"instruction": "Doe nu de inhoud van de wok in een gietijzeren pan, of pan met dikke bodem. Voeg nu de blokjes rundvlees toe en breng de boemboe en het vlees opnieuw tegen de kook aan. Zet het vuur laag en stoof nu je vlees ongeveer 2 uur zonder deksel. De saus zal voor bijna de helft inkoken, het vlees is dan zacht, maar valt nog niet uit elkaar"
+	}, {
+		"instruction": "Haal nu het vlees uit de pan en de saus en verhit ze beiden in de wok op middelhoog vuur. Voeg het kurkumablad toe, de overige kaffirlimoenblaadjes en het citroengras"
+	}],
+	"meta_title": "Rendang uit de bijbel van de Indonesische keuken",
+	"meta_description": "Rendang uit de bijbel van de Indonesische keuken van Maureen Tan, of eigenlijk dus rendang naarrecept van Maureen Tan. En ik kan je vertellen dit is de allerlekkerste rendang die je ooithebt geproefd. Door zelf de boemboe te maken krijg je de echte authentieke smaak die je moet hebbenvoor een goede rendang.",
+	"social_cards": [{
+		"social_card_image": {
+			"origin": {
+				"id": "X6KO4BEAACQARrEB",
+				"url": "https://prismic-io.s3.amazonaws.com/domainemalpaskookt/fc631542-1c7e-4c4b-93e8-5892fcd770fb_Maureen-haar-rendang--scaled.jpg",
+				"width": 1920,
+				"height": 2560
+			},
+			"width": 1920,
+			"height": 2560,
+			"url": "https://images.prismic.io/domainemalpaskookt/fc631542-1c7e-4c4b-93e8-5892fcd770fb_Maureen-haar-rendang--scaled.jpg?auto=compress,format",
+			"edit": {
+				"background": "#fff",
+				"zoom": 1.0,
+				"crop": {
+					"x": 0,
+					"y": 0
+				}
+			},
+			"credits": null,
+			"alt": null,
+			"provider": "imgix",
+			"thumbnails": {}
+		},
+		"social_card_title": "Rendang uit de bijbel van de Indonesische keuken",
+		"social_card_description": "Rendang uit de bijbel van de Indonesische keuken van Maureen Tan, of eigenlijk dus rendang naarrecept van Maureen Tan. En ik kan je vertellen dit is de allerlekkerste rendang die je ooithebt geproefd. Door zelf de boemboe te maken krijg je de echte authentieke smaak die je moet hebbenvoor een goede rendang."
+	}],
+	"type": "recipe",
+	"tags": ["Daging rendang", "Rendang", "Stoofvlees", "Rundvlees"],
+	"lang": "nl-nl",
+	"grouplang": "X6KP6hEAACMARrWF"
+}
