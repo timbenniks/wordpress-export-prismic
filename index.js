@@ -11,6 +11,7 @@ const srcset = require('srcset');
 
 const WP_API = `https://domainemalpaskookt.com/wp-json/wp/v2`
 const recipeData = require('./recipes.json')
+const categories = require('./categories.json')
 const OUTPUT_PATH = path.join(process.cwd(), `./import`)
 const HTML_PARSER = `./htmlParser.rb`
 
@@ -55,7 +56,7 @@ async function getCommentsForPost(id) {
 
 async function getPosts() {
   const posts = await getAllWp('posts')
-  //const posts = [await getPostForId(1846)]
+  //const posts = [await getPostForId(3050)]
   const onlyRecipes = posts.filter(post => !post.categories.includes(36))
 
   return Promise.all(onlyRecipes.map(async post => {
@@ -73,18 +74,25 @@ async function getPosts() {
       additional_content: await cleanupContent(post.content.rendered, post.slug),
       categories: post.categories,
       tags: post.tags,
-      image: post.jetpack_featured_media_url || findImageInContent(post.content.rendered, post.slug),
       // comments: await getCommentsForPost(post.id),
       meta_title: post._yoast_wpseo_title || post.title.rendered,
       meta_description: post._yoast_wpseo_metadesc,
       social_cards: [{
-        social_card_image: {},
+        social_card_image: {
+          origin: {
+            url: post.jetpack_featured_media_url || findImageInContent(post.content.rendered, post.slug),
+          }
+        },
         social_card_title: post._yoast_wpseo_title || post.title.rendered,
         social_card_description: post._yoast_wpseo_metadesc
       }],
       recipe_name: post.title.rendered,
       recipe_summary: await prismicify(post.excerpt.rendered, post.slug),
-      recipe_image: {},
+      recipe_image: {
+        origin: {
+          url: post.jetpack_featured_media_url || findImageInContent(post.content.rendered, post.slug),
+        }
+      },
     }
   }))
 }
@@ -164,10 +172,27 @@ async function getMetadata(which) {
     }))
 }
 
-function mapMetadata(ids, items) {
+function mapTags(ids, tags) {
   return ids.map(id => {
-    const item = items.find(item => item.id === id)
-    return item.name
+    return tags.find(tag => tag.id === id).name
+  })
+}
+
+function mapCategories(ids, items) {
+  const cats = ids.map(id => {
+    return items.find(item => item.id === id).name
+  })
+
+  return cats.map(cat => {
+    const category = categories.find(category => category.label.toLowerCase() === cat.toLowerCase());
+    if(category) {
+      return {
+        category: {
+          id: category.id,
+          wioUrl: `wio://documents/${category.id}`
+        }
+      }
+    }
   })
 }
 
@@ -193,8 +218,8 @@ function mapRecipeData(post) {
 function enrichPostsWithMetadata(options) {
   return options.posts.map(post => ({
       ...post,
-      tags: mapMetadata(post.tags, options.tags),
-      categories: mapMetadata(post.categories, options.categories),
+      tags: mapTags(post.tags, options.tags),
+      categories: mapCategories(post.categories, options.categories),
       ...mapRecipeData(post)
     }))
 }
